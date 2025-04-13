@@ -9,12 +9,23 @@ function Square({value, onSquareClick}) {
 }
 
 export default function Board() {
-const [squares, setSquares] = useState(Array(9).fill(null));
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setXIsNext] = useState(true);
 
-function handleClick(i) {
-  const nextSquares = squares.slice();
-  nextSquares[i] = 'X';
+  function handleClick(i) {
+
+    if (squares[i]) return; //untuk cek kalau square nya udah diisi apa belum
+
+    const nextSquares = squares.slice();
+    if (xIsNext) { //mengecek giliran siapa yang isi
+      nextSquares[i] = 'X';
+    }else{
+      nextSquares[i] = 'O';
+    }
+
+  // ini kalau using ternari if ==> nextSquares[i] = (xIsNext) ? 'X' : 'O' ; 
   setSquares(nextSquares);
+  setXIsNext(!xIsNext);
 }
   return (
     <div className='board'>
